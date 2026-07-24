@@ -39,17 +39,16 @@ const genDiff = (filepath1, filepath2) => {
     if (Object.hasOwn(data1, key) && !Object.hasOwn(data2, key)) {
       return ` - ${key}: ${data1[key]}`
     }
-    else if (Object.hasOwn(data2, key) && !Object.hasOwn(data1, key)) {
+
+    if (Object.hasOwn(data2, key) && !Object.hasOwn(data1, key)) {
       return ` + ${key}: ${data2[key]}`
     }
-    else {
-      if (data1[key] === data2[key]) {
-        return `   ${key}: ${data1[key]}`
-      }
-      else {
-        return ` - ${key}: ${data1[key]}\n + ${key}: ${data2[key]}`
-      }
+
+    if (data1[key] === data2[key]) {
+      return `   ${key}: ${data1[key]}`
     }
+
+    return ` - ${key}: ${data1[key]}\n + ${key}: ${data2[key]}`
   })
   const lines = diffResult.join('\n')
 
