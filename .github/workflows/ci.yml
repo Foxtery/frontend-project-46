@@ -30,3 +30,8 @@ jobs:
 
       - name: Run tests with coverage
         run: npm run test:coverage
+
+      - name: SonarQube Cloud Scan
+        uses: SonarSource/sonarqube-scan-action@v8.2.1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
