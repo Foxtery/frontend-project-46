@@ -20,3 +20,23 @@ test('compare two flat JSON files', () => {
 
   expect(actual).toBe(expected)
 })
+
+test('compare two flat YAML or YML files', () => {
+  const filepath1 = getFixturePath('file1.yaml')
+  const filepath2 = getFixturePath('file2.yml')
+  const expected = fs.readFileSync(getFixturePath('expected.txt'), 'utf-8')
+
+  const actual = genDiff(filepath1, filepath2)
+
+  expect(actual).toBe(expected)
+})
+
+test('compare flat YAML and JSON files', () => {
+  const filepath1 = getFixturePath('file1.json')
+  const filepath2 = getFixturePath('file2.yml')
+  const expected = fs.readFileSync(getFixturePath('expected.txt'), 'utf-8')
+
+  const actual = genDiff(filepath1, filepath2)
+
+  expect(actual).toBe(expected)
+})
