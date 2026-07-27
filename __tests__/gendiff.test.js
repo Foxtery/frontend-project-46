@@ -11,8 +11,8 @@ const getFixturePath = filename => (
   path.join(__dirname, '__fixtures__', filename)
 )
 
-test('compare two flat JSON files', () => {
-  const filepath1 = getFixturePath('file1.json')
+test('compare two files. Default stylish output', () => {
+  const filepath1 = getFixturePath('file1.yaml')
   const filepath2 = getFixturePath('file2.json')
   const expected = fs.readFileSync(getFixturePath('expected.txt'), 'utf-8')
 
@@ -21,22 +21,51 @@ test('compare two flat JSON files', () => {
   expect(actual).toBe(expected)
 })
 
-test('compare two flat YAML or YML files', () => {
-  const filepath1 = getFixturePath('file1.yaml')
-  const filepath2 = getFixturePath('file2.yml')
+test('compare two JSON files. Stylish output', () => {
+  const filepath1 = getFixturePath('file1.json')
+  const filepath2 = getFixturePath('file2.json')
   const expected = fs.readFileSync(getFixturePath('expected.txt'), 'utf-8')
 
-  const actual = genDiff(filepath1, filepath2)
+  const actual = genDiff(filepath1, filepath2, 'stylish')
 
   expect(actual).toBe(expected)
 })
 
-test('compare flat YAML and JSON files', () => {
+test('compare two files. Plain output', () => {
   const filepath1 = getFixturePath('file1.json')
   const filepath2 = getFixturePath('file2.yml')
-  const expected = fs.readFileSync(getFixturePath('expected.txt'), 'utf-8')
+  const expected = fs.readFileSync(getFixturePath('expectedPlain.txt'), 'utf-8')
 
-  const actual = genDiff(filepath1, filepath2)
+  const actual = genDiff(filepath1, filepath2, 'plain')
 
   expect(actual).toBe(expected)
+})
+
+test('compare two files. JSON output', () => {
+  const filepath1 = getFixturePath('file1.json')
+  const filepath2 = getFixturePath('file2.yml')
+  const expected = fs.readFileSync(getFixturePath('expectedJson.txt'), 'utf-8')
+
+  const actual = genDiff(filepath1, filepath2, 'json')
+
+  expect(actual).toBe(expected)
+})
+
+test('throws an error for unknown format', () => {
+  const filepath1 = getFixturePath('file1.json')
+  const filepath2 = getFixturePath('file2.yml')
+
+  expect(() => {
+    genDiff(filepath1, filepath2, 'someformat')
+  }).toThrow('Unknown format: someformat')
+})
+
+test('compare two JSON files. JSON result', () => {
+  const filepath1 = getFixturePath('file1.json')
+  const filepath2 = getFixturePath('file2.json')
+  const expected = fs.readFileSync(getFixturePath('expectedJson.txt'), 'utf-8')
+
+  const actual = genDiff(filepath1, filepath2, 'json')
+
+  expect(JSON.parse(actual)).toEqual(JSON.parse(expected))
 })
