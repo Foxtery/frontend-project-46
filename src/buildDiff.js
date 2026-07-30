@@ -1,5 +1,6 @@
 import { union } from 'es-toolkit/array'
 import sortBy from 'lodash/sortBy.js'
+import { isObject } from './utils.js'
 
 const getSortedKeys = (data1, data2) => { // data1 and data2 are objects!!!
   const keys1 = Object.keys(data1)
@@ -8,12 +9,6 @@ const getSortedKeys = (data1, data2) => { // data1 and data2 are objects!!!
   const sortedKeys = sortBy(uniqueKeys)
   return sortedKeys
 }
-
-const isObject = value => (
-  typeof value === 'object'
-  && value !== null
-  && !Array.isArray(value)
-)
 
 const getDiffTree = (data1, data2) => {
   const sortedUniqueKeys = getSortedKeys(data1, data2)

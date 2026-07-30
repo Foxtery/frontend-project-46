@@ -1,15 +1,12 @@
-const isObject = value => (
-  typeof value === 'object'
-  && value !== null
-  && !Array.isArray(value)
-)
+import { isObject } from '../utils.js'
+
+const spacesCount = 4
 
 const getFormatValue = (value, depth) => {
   if (!isObject(value)) {
     return String(value)
   }
 
-  const spacesCount = 4
   const currentIndent = ' '.repeat(depth * spacesCount)
   const closingIndent = ' '.repeat((depth - 1) * spacesCount)
 

@@ -1,8 +1,4 @@
-const isObject = value => (
-  typeof value === 'object'
-  && value !== null
-  && !Array.isArray(value)
-)
+import { isObject } from '../utils.js'
 
 const formatValue = (value) => {
   if (isObject(value)) {
